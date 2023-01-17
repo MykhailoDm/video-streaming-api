@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+        <changeSet id="createVideoAndTagTables" author="Mykhailo">
+            <createTable tableName="video">
+                <column name="id" type="varchar(55)">
+                    <constraints primaryKey="true"/>
+                </column>
+                <column name="title" type="varchar(55)">
+                    <constraints nullable="false" unique="true"/>
+                </column>
+                <column name="description" type="varchar(55)"/>
+                <column name="video" type="blob">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+        </changeSet>
+</databaseChangeLog>

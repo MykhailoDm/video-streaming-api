@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "video")
+@Table(name = "tag")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

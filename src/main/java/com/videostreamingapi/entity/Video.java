@@ -41,8 +41,8 @@ public class Video {
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "video_tag",
-            joinColumns = { @JoinColumn(name = "video_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") }
+            joinColumns = { @JoinColumn(name = "video_id", referencedColumnName = "id")},
+            inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id") }
     )
     Set<Tag> tags = new HashSet<>();
 }

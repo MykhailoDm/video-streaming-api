@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "video")
+@Table(name = "video", indexes = @Index(columnList = "title"))
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

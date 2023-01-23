@@ -1,3 +1,4 @@
+# TODO make configurable properties take values from env variables
 spring:
   datasource:
     username:
@@ -12,3 +13,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+app:
+  auth:
+    secret:
+    expiration:

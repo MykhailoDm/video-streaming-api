@@ -37,5 +37,39 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="CreateUserAndRoleTables" author="Mykhailo">
+        <createTable tableName="user">
+            <column name="id" type="varchar(55)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(55)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar(55)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="role">
+            <column name="id" type="varchar(55)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_role" type="varchar(55)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_role">
+            <column name="user_id" type="varchar(55)">
+                <constraints nullable="false" foreignKeyName="fk_user_id" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+            <column name="role_id" type="varchar(55)">
+                <constraints nullable="false" foreignKeyName="fk_role_id" referencedTableName="role" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

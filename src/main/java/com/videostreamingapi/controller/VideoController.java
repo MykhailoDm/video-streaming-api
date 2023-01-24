@@ -26,6 +26,7 @@ public class VideoController {
             @RequestParam("tags") String[] tags
     ) {
         log.info("Request to save video");
+        // TODO add user id retrieval and add it to video
         videoService.save(multipartFile, title, description, tags);
     }
 

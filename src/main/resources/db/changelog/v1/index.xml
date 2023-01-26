@@ -13,4 +13,16 @@
             <column name="name"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="AddIndexesToUserAndRoleTables" author="Mykhailo">
+        <createIndex tableName="user" indexName="idx_user_username">
+            <column name="username"/>
+        </createIndex>
+        <createIndex tableName="user" indexName="idx_user_email">
+            <column name="email"/>
+        </createIndex>
+        <createIndex tableName="role" indexName="idx_role_user_role">
+            <column name="user_role"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

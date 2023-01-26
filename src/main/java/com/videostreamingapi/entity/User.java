@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", indexes = {@Index(name = "idx_user_username", columnList = "username"), @Index(name = "idx_user_email", columnList = "email")})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -38,8 +38,8 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
-            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private Set<Role> roles = new HashSet<>();
 }

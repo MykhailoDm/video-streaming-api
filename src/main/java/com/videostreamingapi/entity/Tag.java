@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tag", indexes = @Index(columnList = "name"))
+@Table(name = "tag", indexes = @Index(name = "idx_tag_name", columnList = "name"))
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

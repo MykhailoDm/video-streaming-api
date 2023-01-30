@@ -10,7 +10,7 @@ import org.hibernate.type.SqlTypes;
 import java.util.UUID;
 
 @Entity
-@Table(name = "role", indexes = @Index(name = "idx_role_user_role", columnList = "userRole"))
+@Table(name = "role", indexes = @Index(name = "idx_role_user_role", columnList = "user_role"))
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

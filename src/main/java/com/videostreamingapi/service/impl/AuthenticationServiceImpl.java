@@ -25,6 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -71,21 +73,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         log.info("Creating new user account");
-        // TODO finish
         User user = buildUser(signUpRequest);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return new SignUpResponse(SignUpResult.SUCCESS, "User successfully registered");
     }
 
     private User buildUser(SignUpRequest signUpRequest) {
-        signUpRequest.userRoles().stream()
-                .map(r -> )
-        User user = new User(null, signUpRequest.username(), signUpRequest.email(),
-                passwordEncoder.encode(signUpRequest.password()), null);
+        Set<Role> roles = signUpRequest.userRoles().stream()
+                .map(this::getRole)
+                .collect(Collectors.toSet());
+
+        return new User(null, signUpRequest.username(), signUpRequest.email(),
+                passwordEncoder.encode(signUpRequest.password()), roles);
     }
 
     private Role getRole(UserRole userRole) {
-        // TODO finish
+        return roleRepository.findByUserRole(userRole)
+                .orElseGet(() -> roleRepository.save(new Role(null, userRole)));
     }
 }

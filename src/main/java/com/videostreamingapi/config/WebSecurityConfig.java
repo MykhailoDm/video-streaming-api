@@ -45,9 +45,9 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationEntryPoint authenticationEntryPoint,
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, AuthenticationEntryPoint authenticationEntryPoint,
                                            DaoAuthenticationProvider authenticationProvider, SecurityFilter securityFilter) throws Exception {
-        http.cors()
+        httpSecurity.cors()
                 .and()
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
@@ -57,10 +57,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated();
 
-        http.authenticationProvider(authenticationProvider);
+        httpSecurity.authenticationProvider(authenticationProvider);
 
-        http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
+        return httpSecurity.build();
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class VideoServiceImpl implements VideoService {
     private final TagRepository tagRepository;
 
     @Override
-    public void save(MultipartFile videoMultipart, String title, String description, String[] tags) {
+    public void save(MultipartFile videoMultipart, String title, String description, String[] tags, UUID userId) {
         log.info("Checking for duplicate video titles");
         checkForDuplicateTitle(title);
 

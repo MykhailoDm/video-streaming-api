@@ -1,14 +1,20 @@
 package com.videostreamingapi.controller;
 
 
+import com.videostreamingapi.security.UserDetailsImpl;
 import com.videostreamingapi.service.VideoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
+
+import static com.videostreamingapi.util.AuthenticationUtils.authenticationToUserDetails;
 
 @RestController
 @RequestMapping("/api/v1/videos")
@@ -23,11 +29,15 @@ public class VideoController {
             @RequestParam("video") MultipartFile multipartFile,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            @RequestParam("tags") String[] tags
+            @RequestParam("tags") String[] tags,
+            Authentication authentication
     ) {
         log.info("Request to save video");
-        // TODO add user id retrieval and add it to video
-        videoService.save(multipartFile, title, description, tags);
+        videoService.save(multipartFile, title, description, tags, getUserIdFromAuthentication(authentication));
+    }
+
+    private UUID getUserIdFromAuthentication(Authentication authentication) {
+        return authenticationToUserDetails(authentication).getId();
     }
 
 }

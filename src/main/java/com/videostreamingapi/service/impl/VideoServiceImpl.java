@@ -6,10 +6,12 @@ import com.videostreamingapi.exception.DuplicateVideoTitleException;
 import com.videostreamingapi.exception.InvalidVideoBytesInformationException;
 import com.videostreamingapi.repository.TagRepository;
 import com.videostreamingapi.repository.VideoRepository;
+import com.videostreamingapi.service.UserService;
 import com.videostreamingapi.service.VideoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,12 +20,14 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
+@Transactional
 @AllArgsConstructor
 @Slf4j
 public class VideoServiceImpl implements VideoService {
 
     private final VideoRepository videoRepository;
     private final TagRepository tagRepository;
+    private final UserService userService;
 
     @Override
     public void save(MultipartFile videoMultipart, String title, String description, String[] tags, UUID userId) {
@@ -35,7 +39,7 @@ public class VideoServiceImpl implements VideoService {
 
         log.info("Saving video");
         log.debug("Video title {}", title);
-        Video videoToSave = buildVideoFrom(title, description, tags, videoBytes);
+        Video videoToSave = buildVideoFrom(title, description, tags, videoBytes, userId);
         videoRepository.save(videoToSave);
     }
 
@@ -57,11 +61,12 @@ public class VideoServiceImpl implements VideoService {
         }
     }
 
-    private Video buildVideoFrom(String title, String description, String[] tags, byte[] videoBytes) {
+    private Video buildVideoFrom(String title, String description, String[] tags, byte[] videoBytes, UUID userId) {
         return Video.builder().video(videoBytes)
                 .title(title)
                 .description(description)
                 .tags(extractTags(tags))
+                .user(userService.findById(userId))
                 .build();
     }
 

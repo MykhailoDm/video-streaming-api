@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class InvalidUserFromAuthentication extends RuntimeException {
+public class InvalidUserFromAuthenticationException extends RuntimeException {
 
-    public InvalidUserFromAuthentication() {
+    public InvalidUserFromAuthenticationException() {
     }
 
-    public InvalidUserFromAuthentication(String message) {
+    public InvalidUserFromAuthenticationException(String message) {
         super(message);
     }
 }

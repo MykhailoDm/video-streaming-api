@@ -29,10 +29,10 @@
 
         <createTable tableName="video_tag">
             <column name="video_id" type="varchar(55)">
-                <constraints nullable="false" foreignKeyName="fk_video_id" referencedTableName="video" referencedColumnNames="id"/>
+                <constraints nullable="false" foreignKeyName="fk_video_tag_video_id" referencedTableName="video" referencedColumnNames="id"/>
             </column>
             <column name="tag_id" type="varchar(55)">
-                <constraints nullable="false" foreignKeyName="fk_tag_id" referencedTableName="tag" referencedColumnNames="id"/>
+                <constraints nullable="false" foreignKeyName="fk_video_tag_tag_id" referencedTableName="tag" referencedColumnNames="id"/>
             </column>
         </createTable>
     </changeSet>
@@ -64,12 +64,20 @@
 
         <createTable tableName="user_role">
             <column name="user_id" type="varchar(55)">
-                <constraints nullable="false" foreignKeyName="fk_user_id" referencedTableName="user" referencedColumnNames="id"/>
+                <constraints nullable="false" foreignKeyName="fk_user_role_user_id" referencedTableName="user" referencedColumnNames="id"/>
             </column>
             <column name="role_id" type="varchar(55)">
-                <constraints nullable="false" foreignKeyName="fk_role_id" referencedTableName="role" referencedColumnNames="id"/>
+                <constraints nullable="false" foreignKeyName="fk_user_role_role_id" referencedTableName="role" referencedColumnNames="id"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <changeSet id="addUserIdColumnToVideo" author="Mykhailo Dmytryshyn">
+        <addColumn tableName="video">
+            <column name="user_id" type="varchar(55)">
+                <constraints nullable="false" foreignKeyName="fk_video_user_id" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

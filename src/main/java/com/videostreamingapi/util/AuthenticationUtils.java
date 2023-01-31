@@ -1,6 +1,6 @@
 package com.videostreamingapi.util;
 
-import com.videostreamingapi.exception.InvalidUserFromAuthentication;
+import com.videostreamingapi.exception.InvalidUserFromAuthenticationException;
 import com.videostreamingapi.security.UserDetailsImpl;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
@@ -9,10 +9,11 @@ import org.springframework.security.core.Authentication;
 public class AuthenticationUtils {
 
     public static UserDetailsImpl authenticationToUserDetails(Authentication authentication) {
-        if (authentication instanceof UserDetailsImpl) {
-            return (UserDetailsImpl) authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetailsImpl userDetails) {
+            return userDetails;
         }
 
-        throw new InvalidUserFromAuthentication("Could not retrieve user from Authentication");
+        throw new InvalidUserFromAuthenticationException("Could not retrieve user from Authentication");
     }
 }

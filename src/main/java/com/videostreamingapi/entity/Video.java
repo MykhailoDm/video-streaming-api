@@ -43,4 +43,8 @@ public class Video {
             inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id") }
     )
     Set<Tag> tags = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

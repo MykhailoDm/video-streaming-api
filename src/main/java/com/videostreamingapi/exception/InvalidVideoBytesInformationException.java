@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidVideoBytesInformationException extends RuntimeException {
 
-    public InvalidVideoBytesInformationException() {
-    }
-
     public InvalidVideoBytesInformationException(String message) {
         super(message);
     }

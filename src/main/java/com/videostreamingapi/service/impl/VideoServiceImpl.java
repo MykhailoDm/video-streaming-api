@@ -1,13 +1,16 @@
 package com.videostreamingapi.service.impl;
 
+import com.videostreamingapi.dto.response.VideoResponse;
 import com.videostreamingapi.entity.Tag;
 import com.videostreamingapi.entity.Video;
 import com.videostreamingapi.exception.DuplicateVideoTitleException;
 import com.videostreamingapi.exception.InvalidVideoBytesInformationException;
+import com.videostreamingapi.exception.VideoNotFoundException;
 import com.videostreamingapi.repository.TagRepository;
 import com.videostreamingapi.repository.VideoRepository;
 import com.videostreamingapi.service.UserService;
 import com.videostreamingapi.service.VideoService;
+import com.videostreamingapi.util.VideoMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,6 +44,21 @@ public class VideoServiceImpl implements VideoService {
         log.debug("Video title {}", title);
         Video videoToSave = buildVideoFrom(title, description, tags, videoBytes, userId);
         videoRepository.save(videoToSave);
+    }
+
+    @Override
+    public byte[] getVideoBytesById(UUID id, UUID userId) {
+        return getVideoEntityById(id, userId).getVideo();
+    }
+
+    @Override
+    public VideoResponse getById(UUID id, UUID userId) {
+        return VideoMapper.videoToVideoResponse(getVideoEntityById(id, userId));
+    }
+
+    private Video getVideoEntityById(UUID id, UUID userId) {
+        return videoRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user id: " + userId));
     }
 
     private byte[] extractVideoFromMultipartRequest(MultipartFile videoMultipart) {

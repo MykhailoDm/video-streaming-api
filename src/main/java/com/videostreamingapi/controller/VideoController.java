@@ -1,6 +1,7 @@
 package com.videostreamingapi.controller;
 
 
+import com.videostreamingapi.dto.request.VideoUpdateRequest;
 import com.videostreamingapi.dto.response.VideoResponse;
 import com.videostreamingapi.service.VideoService;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,12 @@ public class VideoController {
     public VideoResponse getById(@PathVariable UUID id, Authentication authentication) {
         log.info("Get video by id: {}", id);
         return videoService.getById(id, getUserIdFromAuthentication(authentication));
+    }
+
+    @PutMapping("/{id}")
+    public void update(@PathVariable UUID id, Authentication authentication, @RequestBody VideoUpdateRequest videoUpdateRequest) {
+        log.info("Updating video with id: {}", id);
+        videoService.update(id, getUserIdFromAuthentication(authentication), videoUpdateRequest);
     }
 
     private UUID getUserIdFromAuthentication(Authentication authentication) {

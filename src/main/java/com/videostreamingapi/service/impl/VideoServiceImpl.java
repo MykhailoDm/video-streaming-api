@@ -1,5 +1,6 @@
 package com.videostreamingapi.service.impl;
 
+import com.videostreamingapi.dto.request.VideoUpdateRequest;
 import com.videostreamingapi.dto.response.VideoResponse;
 import com.videostreamingapi.entity.Tag;
 import com.videostreamingapi.entity.Video;
@@ -54,6 +55,16 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public VideoResponse getById(UUID id, UUID userId) {
         return VideoMapper.videoToVideoResponse(getVideoEntityById(id, userId));
+    }
+
+    @Override
+    public void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest) {
+        log.info("Updating video {} of user with id {}", id, userId);
+        Video video = getVideoEntityById(id, userId);
+        video.setTitle(videoUpdateRequest.title());
+        video.setDescription(videoUpdateRequest.description());
+        String[] tagsStringArray = videoUpdateRequest.tags().toArray(new String[0]);
+        video.setTags(extractTags(tagsStringArray));
     }
 
     private Video getVideoEntityById(UUID id, UUID userId) {

@@ -1,5 +1,6 @@
 package com.videostreamingapi.service;
 
+import com.videostreamingapi.dto.request.VideoUpdateRequest;
 import com.videostreamingapi.dto.response.VideoResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,4 +13,6 @@ public interface VideoService {
     byte[] getVideoBytesById(UUID id, UUID userId);
 
     VideoResponse getById(UUID id, UUID userId);
+
+    void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest);
 }

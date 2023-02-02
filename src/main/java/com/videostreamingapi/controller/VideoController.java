@@ -56,6 +56,12 @@ public class VideoController {
         videoService.update(id, getUserIdFromAuthentication(authentication), videoUpdateRequest);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id, Authentication authentication) {
+        log.info("Deleting video with id: {}", id);
+        videoService.delete(id, getUserIdFromAuthentication(authentication));
+    }
+
     private UUID getUserIdFromAuthentication(Authentication authentication) {
         return authenticationToUserDetails(authentication).getId();
     }

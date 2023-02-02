@@ -15,4 +15,6 @@ public interface VideoService {
     VideoResponse getById(UUID id, UUID userId);
 
     void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest);
+
+    void delete(UUID id, UUID userId);
 }

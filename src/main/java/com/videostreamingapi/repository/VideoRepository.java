@@ -13,4 +13,6 @@ public interface VideoRepository extends JpaRepository<Video, UUID> {
     boolean existsByTitle(String title);
 
     Optional<Video> findByIdAndUserId(UUID id, UUID userId);
+
+    void deleteByIdAndUserId(UUID id, UUID userId);
 }

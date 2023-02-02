@@ -67,6 +67,12 @@ public class VideoServiceImpl implements VideoService {
         video.setTags(extractTags(tagsStringArray));
     }
 
+    @Override
+    public void delete(UUID id, UUID userId) {
+        log.info("Deleting video {} of user with id {}", id, userId);
+        videoRepository.deleteByIdAndUserId(id, userId);
+    }
+
     private Video getVideoEntityById(UUID id, UUID userId) {
         return videoRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user id: " + userId));

@@ -1,13 +1,13 @@
 # TODO make configurable properties take values from env variables
 spring:
   datasource:
-    username:
-    password:
-    url:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-file-size: ${MAX_MULTIPART_FILE_SIZE}
+      max-request-size: ${MAX_MULTIPART_REQUEST_SIZE}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
   jpa:
@@ -16,5 +16,5 @@ spring:
 
 app:
   auth:
-    secret:
-    expiration:
+    secret: ${AUTH_SECRET}
+    expiration: ${AUTH_EXPIRATION}

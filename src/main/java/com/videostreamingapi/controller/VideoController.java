@@ -37,7 +37,7 @@ public class VideoController {
     }
 
     @GetMapping("/bytes/{id}")
-    public ResponseEntity<Resource> getVieoBytesById(@PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<Resource> getVideoBytesById(@PathVariable UUID id, Authentication authentication) {
         log.info("Get video bytes by id: {}", id);
         byte[] videoBytes = videoService.getVideoBytesById(id, getUserIdFromAuthentication(authentication));
         return ResponseEntity.ok(new ByteArrayResource(videoBytes));

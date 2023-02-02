@@ -1,12 +1,10 @@
 package com.videostreamingapi.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class InvalidUserFromAuthenticationException extends RuntimeException {
+public class InvalidUserFromAuthenticationException extends StatusCodeException {
 
     public InvalidUserFromAuthenticationException(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 }

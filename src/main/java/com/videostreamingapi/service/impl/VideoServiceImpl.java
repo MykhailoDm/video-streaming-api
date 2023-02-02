@@ -75,7 +75,7 @@ public class VideoServiceImpl implements VideoService {
 
     private Video getVideoEntityById(UUID id, UUID userId) {
         return videoRepository.findByIdAndUserId(id, userId)
-                .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user id: " + userId));
+                .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user with id: " + userId));
     }
 
     private byte[] extractVideoFromMultipartRequest(MultipartFile videoMultipart) {

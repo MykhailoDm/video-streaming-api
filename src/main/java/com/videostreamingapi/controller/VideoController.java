@@ -23,6 +23,8 @@ import static com.videostreamingapi.util.AuthenticationUtils.authenticationToUse
 @Slf4j
 public class VideoController {
 
+    // TODO add likes and views APIs
+
     private final VideoService videoService;
 
     @PostMapping

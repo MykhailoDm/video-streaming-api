@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-import static com.videostreamingapi.util.AuthenticationUtils.authenticationToUserDetails;
+import static com.videostreamingapi.util.AuthenticationUtils.getUserIdFromAuthentication;
 
 @RestController
 @RequestMapping("/api/v1/videos")
@@ -62,10 +62,6 @@ public class VideoController {
     public void delete(@PathVariable UUID id, Authentication authentication) {
         log.info("Deleting video with id: {}", id);
         videoService.delete(id, getUserIdFromAuthentication(authentication));
-    }
-
-    private UUID getUserIdFromAuthentication(Authentication authentication) {
-        return authenticationToUserDetails(authentication).getId();
     }
 
 }

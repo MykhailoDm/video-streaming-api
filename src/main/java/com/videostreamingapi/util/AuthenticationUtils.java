@@ -10,7 +10,7 @@ import java.util.UUID;
 @UtilityClass
 public class AuthenticationUtils {
 
-    public UUID getUserIdFromAuthentication(Authentication authentication) {
+    public static UUID getUserIdFromAuthentication(Authentication authentication) {
         return authenticationToUserDetails(authentication).getId();
     }
 

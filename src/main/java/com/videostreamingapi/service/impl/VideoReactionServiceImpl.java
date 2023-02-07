@@ -1,12 +1,14 @@
 package com.videostreamingapi.service.impl;
 
 import com.videostreamingapi.dto.request.VideoReactionRequest;
+import com.videostreamingapi.dto.response.VideoReactionResponse;
 import com.videostreamingapi.entity.VideoReaction;
 import com.videostreamingapi.exception.VideoReactionAlreadyExists;
 import com.videostreamingapi.repository.VideoReactionRepository;
 import com.videostreamingapi.service.UserService;
 import com.videostreamingapi.service.VideoReactionService;
 import com.videostreamingapi.service.VideoService;
+import com.videostreamingapi.util.VideoReactionMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class VideoReactionServiceImpl implements VideoReactionService {
     private final VideoReactionRepository videoReactionRepository;
 
     @Override
-    public void save(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {
+    public VideoReactionResponse save(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {
         log.info("Saving reaction for video {}", videoId);
 
         if (videoReactionRepository.existsByUserIdAndVideoId(userId, videoId)) {
@@ -37,6 +39,7 @@ public class VideoReactionServiceImpl implements VideoReactionService {
         var videoReaction = buildVideoReaction(videoId, userId, videoReactionRequest);
         videoReactionRepository.save(videoReaction);
         log.debug("Created video reaction with id {}", videoReaction.getId());
+        return VideoReactionMapper.videoReactionToVideoReactionResponse(videoReaction);
     }
 
     private VideoReaction buildVideoReaction(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {

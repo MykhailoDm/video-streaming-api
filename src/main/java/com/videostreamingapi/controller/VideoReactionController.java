@@ -1,6 +1,7 @@
 package com.videostreamingapi.controller;
 
 import com.videostreamingapi.dto.request.VideoReactionRequest;
+import com.videostreamingapi.dto.response.VideoReactionResponse;
 import com.videostreamingapi.service.VideoReactionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,10 @@ public class VideoReactionController {
 
     private final VideoReactionService videoReactionService;
 
-    // TODO add response dto
     @PostMapping
-    public void save(@PathVariable UUID videoId, Authentication authentication,
-                     @RequestBody VideoReactionRequest videoReactionRequest) {
+    public VideoReactionResponse save(@PathVariable UUID videoId, Authentication authentication,
+                                      @RequestBody VideoReactionRequest videoReactionRequest) {
         log.info("Request to save reaction to video {}. Reaction is positive: {}", videoId, videoReactionRequest.isPositive());
-        videoReactionService.save(videoId, getUserIdFromAuthentication(authentication), videoReactionRequest);
+        return videoReactionService.save(videoId, getUserIdFromAuthentication(authentication), videoReactionRequest);
     }
 }

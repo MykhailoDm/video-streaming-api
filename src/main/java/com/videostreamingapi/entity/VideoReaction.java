@@ -8,7 +8,6 @@ import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
-// TODO add to liquibase scripts
 @Entity
 @Table(name = "video_reaction")
 @AllArgsConstructor

@@ -1,7 +1,12 @@
 package com.videostreamingapi.service.impl;
 
 import com.videostreamingapi.dto.request.VideoReactionRequest;
+import com.videostreamingapi.entity.VideoReaction;
+import com.videostreamingapi.exception.VideoReactionAlreadyExists;
+import com.videostreamingapi.repository.VideoReactionRepository;
+import com.videostreamingapi.service.UserService;
 import com.videostreamingapi.service.VideoReactionService;
+import com.videostreamingapi.service.VideoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,11 +20,26 @@ import java.util.UUID;
 @Slf4j
 public class VideoReactionServiceImpl implements VideoReactionService {
 
+    private final VideoService videoService;
+    private final UserService userService;
 
+    private final VideoReactionRepository videoReactionRepository;
 
     @Override
-    public void save(String videoId, UUID userIdFromAuthentication, VideoReactionRequest videoReactionRequest) {
+    public void save(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {
         log.info("Saving reaction for video {}", videoId);
-        // TODO implement
+
+        if (videoReactionRepository.existsByUserIdAndVideoId(userId, videoId)) {
+            log.debug("User {} has already reacted to video {}", userId, videoId);
+            throw new VideoReactionAlreadyExists("Video Reaction already exists for user " + userId + " and video " + videoId);
+        }
+
+        var videoReaction = buildVideoReaction(videoId, userId, videoReactionRequest);
+        videoReactionRepository.save(videoReaction);
+        log.debug("Created video reaction with id {}", videoReaction.getId());
+    }
+
+    private VideoReaction buildVideoReaction(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {
+        return new VideoReaction(null, videoReactionRequest.isPositive(), userService.findById(userId), videoService.findById(videoId));
     }
 }

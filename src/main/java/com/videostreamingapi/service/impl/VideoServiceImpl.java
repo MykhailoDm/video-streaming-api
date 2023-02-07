@@ -73,6 +73,12 @@ public class VideoServiceImpl implements VideoService {
         videoRepository.deleteByIdAndUserId(id, userId);
     }
 
+    @Override
+    public Video findById(UUID id) {
+        return videoRepository.findById(id)
+                .orElseThrow(() -> new VideoNotFoundException("Video with id " + id + " not found."));
+    }
+
     private Video getVideoEntityById(UUID id, UUID userId) {
         return videoRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user with id: " + userId));

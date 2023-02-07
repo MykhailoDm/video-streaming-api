@@ -2,6 +2,7 @@ package com.videostreamingapi.service;
 
 import com.videostreamingapi.dto.request.VideoUpdateRequest;
 import com.videostreamingapi.dto.response.VideoResponse;
+import com.videostreamingapi.entity.Video;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
@@ -17,4 +18,6 @@ public interface VideoService {
     void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest);
 
     void delete(UUID id, UUID userId);
+
+    Video findById(UUID id);
 }

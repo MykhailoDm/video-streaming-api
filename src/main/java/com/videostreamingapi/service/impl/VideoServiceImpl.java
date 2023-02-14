@@ -1,5 +1,6 @@
 package com.videostreamingapi.service.impl;
 
+import com.videostreamingapi.dto.query.VideoInfo;
 import com.videostreamingapi.dto.request.VideoUpdateRequest;
 import com.videostreamingapi.dto.response.VideoResponse;
 import com.videostreamingapi.entity.Tag;
@@ -19,9 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+
+import static com.videostreamingapi.util.VideoMapper.videoInfoToVideoResponse;
 
 @Service
 @Transactional
@@ -33,8 +34,10 @@ public class VideoServiceImpl implements VideoService {
     private final TagRepository tagRepository;
     private final UserService userService;
 
+    private static final String VIDEO_NOT_FOUND_EXCEPTION_MESSAGE = "Video not found by id: ";
+
     @Override
-    public void save(MultipartFile videoMultipart, String title, String description, String[] tags, UUID userId) {
+    public VideoResponse save(MultipartFile videoMultipart, String title, String description, String[] tags, UUID userId) {
         log.info("Checking for duplicate video titles");
         checkForDuplicateTitle(title);
 
@@ -43,24 +46,25 @@ public class VideoServiceImpl implements VideoService {
 
         log.info("Saving video");
         log.debug("Video title {}", title);
-        Video videoToSave = buildVideoFrom(title, description, tags, videoBytes, userId);
-        videoRepository.save(videoToSave);
+        var videoToSave = buildVideoFrom(title, description, tags, videoBytes, userId);
+        var savedVideo = videoRepository.save(videoToSave);
+        return VideoMapper.videoToVideoResponse(savedVideo);
     }
 
     @Override
-    public byte[] getVideoBytesById(UUID id, UUID userId) {
-        return getVideoEntityById(id, userId).getVideo();
+    public byte[] getVideoBytesById(UUID id) {
+        return getVideoEntityById(id).getVideo();
     }
 
     @Override
-    public VideoResponse getById(UUID id, UUID userId) {
-        return VideoMapper.videoToVideoResponse(getVideoEntityById(id, userId));
+    public VideoResponse getById(UUID id) {
+        return videoInfoToVideoResponse(getVideoInfoById(id));
     }
 
     @Override
     public void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest) {
         log.info("Updating video {} of user with id {}", id, userId);
-        Video video = getVideoEntityById(id, userId);
+        var video = getVideoEntityById(id, userId);
         video.setTitle(videoUpdateRequest.title());
         video.setDescription(videoUpdateRequest.description());
         String[] tagsStringArray = videoUpdateRequest.tags().toArray(new String[0]);
@@ -81,7 +85,17 @@ public class VideoServiceImpl implements VideoService {
 
     private Video getVideoEntityById(UUID id, UUID userId) {
         return videoRepository.findByIdAndUserId(id, userId)
-                .orElseThrow(() -> new VideoNotFoundException("Video not found by id: " + id + ", for user with id: " + userId));
+                .orElseThrow(() -> new VideoNotFoundException(VIDEO_NOT_FOUND_EXCEPTION_MESSAGE + id + ", for user with id: " + userId));
+    }
+
+    private Video getVideoEntityById(UUID id) {
+        return videoRepository.findById(id)
+                .orElseThrow(() -> new VideoNotFoundException(VIDEO_NOT_FOUND_EXCEPTION_MESSAGE + id));
+    }
+
+    private VideoInfo getVideoInfoById(UUID id) {
+        return videoRepository.findInfoById(id)
+                .orElseThrow(() -> new VideoNotFoundException(VIDEO_NOT_FOUND_EXCEPTION_MESSAGE + id));
     }
 
     private byte[] extractVideoFromMultipartRequest(MultipartFile videoMultipart) {

@@ -23,13 +23,12 @@ import static com.videostreamingapi.util.AuthenticationUtils.getUserIdFromAuthen
 @Slf4j
 public class VideoController {
 
-    // TODO add likes and views APIs
+    // TODO add views APIs
 
     private final VideoService videoService;
 
-    // TODO add response dto with likes
     @PostMapping
-    public void save(
+    public VideoResponse save(
             @RequestParam("video") MultipartFile multipartFile,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
@@ -37,20 +36,20 @@ public class VideoController {
             Authentication authentication
     ) {
         log.info("Request to save video");
-        videoService.save(multipartFile, title, description, tags, getUserIdFromAuthentication(authentication));
+        return videoService.save(multipartFile, title, description, tags, getUserIdFromAuthentication(authentication));
     }
 
     @GetMapping("/bytes/{id}")
-    public ResponseEntity<Resource> getVideoBytesById(@PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<Resource> getVideoBytesById(@PathVariable UUID id) {
         log.info("Get video bytes by id: {}", id);
-        byte[] videoBytes = videoService.getVideoBytesById(id, getUserIdFromAuthentication(authentication));
+        byte[] videoBytes = videoService.getVideoBytesById(id);
         return ResponseEntity.ok(new ByteArrayResource(videoBytes));
     }
 
     @GetMapping("/{id}")
-    public VideoResponse getById(@PathVariable UUID id, Authentication authentication) {
+    public VideoResponse getById(@PathVariable UUID id) {
         log.info("Get video by id: {}", id);
-        return videoService.getById(id, getUserIdFromAuthentication(authentication));
+        return videoService.getById(id);
     }
 
     @PutMapping("/{id}")

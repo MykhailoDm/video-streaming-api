@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface VideoService {
 
-    void save(MultipartFile video, String title, String description, String[] tags, UUID userId);
+    VideoResponse save(MultipartFile video, String title, String description, String[] tags, UUID userId);
 
-    byte[] getVideoBytesById(UUID id, UUID userId);
+    byte[] getVideoBytesById(UUID id);
 
-    VideoResponse getById(UUID id, UUID userId);
+    VideoResponse getById(UUID id);
 
     void update(UUID id, UUID userId, VideoUpdateRequest videoUpdateRequest);
 

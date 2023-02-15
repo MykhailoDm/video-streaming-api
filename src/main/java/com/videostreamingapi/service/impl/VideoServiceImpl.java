@@ -117,22 +117,25 @@ public class VideoServiceImpl implements VideoService {
     }
 
     private Video buildVideoFrom(String title, String description, String[] tags, byte[] videoBytes, UUID userId) {
-        return Video.builder().video(videoBytes)
-                .title(title)
-                .description(description)
-                .tags(extractTags(tags))
-                .user(userService.findById(userId))
-                .build();
+        var video = new Video();
+        video.setVideo(videoBytes);
+        video.setTitle(title);
+        video.setDescription(description);
+        video.setTags(extractTags(tags));
+        video.setUser(userService.findById(userId));
+        return video;
     }
 
     private Set<Tag> extractTags(String[] tags) {
         Set<Tag> tagEntities = new HashSet<>();
         for (String tag : tags) {
             tagRepository.findByName(tag)
-                    .ifPresentOrElse(tagEntities::add, () -> tagEntities.add(Tag.builder()
-                            .name(tag)
-                            .build()));
+                    .ifPresentOrElse(tagEntities::add, () -> tagEntities.add(buildeTagFrom(tag)));
         }
         return tagEntities;
+    }
+
+    private Tag buildeTagFrom(String tag) {
+        return new Tag(null, tag, null);
     }
 }

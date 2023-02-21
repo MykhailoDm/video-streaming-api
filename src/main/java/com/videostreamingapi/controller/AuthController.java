@@ -18,7 +18,7 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    // TODO add audited fields
+    // TODO add controller for user information
 
     @PostMapping("/signin")
     public SignInResponse signIn(@RequestBody SignInRequest signInRequest) {

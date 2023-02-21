@@ -7,6 +7,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class VideoReactionMapper {
     public static VideoReactionResponse videoReactionToVideoReactionResponse(VideoReaction videoReaction) {
-        return new VideoReactionResponse(videoReaction.getId(), videoReaction.isPositive(), videoReaction.getVideo().getId(), videoReaction.getUser().getId());
+        return new VideoReactionResponse(videoReaction.getId(), videoReaction.isPositive(),
+                videoReaction.getVideo().getId(), videoReaction.getUser().getId(),
+                videoReaction.getCreatedBy(), videoReaction.getLastModifiedBy(),
+                videoReaction.getCreatedDate(), videoReaction.getLastModifiedDate());
     }
 }

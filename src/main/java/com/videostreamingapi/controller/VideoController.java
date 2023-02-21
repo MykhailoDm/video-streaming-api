@@ -25,8 +25,6 @@ public class VideoController {
 
     // TODO add views APIs
 
-    // TODO add to return values audited fields
-
     private final VideoService videoService;
 
     @PostMapping

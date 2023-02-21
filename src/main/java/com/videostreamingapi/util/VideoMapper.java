@@ -18,12 +18,16 @@ public class VideoMapper {
 
     public static VideoResponse videoToVideoResponse(Video video, long likes, long dislikes) {
         return new VideoResponse(video.getId(), video.getTitle(), video.getDescription(),
-                getTagsFromTagEntity(video.getTags()), likes, dislikes);
+                getTagsFromTagEntity(video.getTags()), likes, dislikes,
+                video.getCreatedBy(), video.getLastModifiedBy(),
+                video.getCreatedDate(), video.getLastModifiedDate());
     }
 
     public static VideoResponse videoInfoToVideoResponse(VideoInfo videoInfo) {
         return new VideoResponse(videoInfo.getId(), videoInfo.getTitle(), videoInfo.getDescription(),
-                getTagsFromTagEntity(videoInfo.getTags()), videoInfo.getLikes(), videoInfo.getDislikes());
+                getTagsFromTagEntity(videoInfo.getTags()), videoInfo.getLikes(), videoInfo.getDislikes(),
+                videoInfo.getCreatedBy(), videoInfo.getModifiedBy(),
+                videoInfo.getCreatedDate(), videoInfo.getModifiedDate());
     }
 
     private static Set<String> getTagsFromTagEntity(Set<Tag> tags) {

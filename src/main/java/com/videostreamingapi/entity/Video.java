@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Video {
+public class Video extends BaseAuditingEntity {
 
     @Id
     @Column(name = "id", nullable = false)

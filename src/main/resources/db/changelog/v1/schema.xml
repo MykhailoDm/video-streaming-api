@@ -16,6 +16,14 @@
             <column name="video" type="mediumblob">
                 <constraints nullable="false"/>
             </column>
+            <column name="created_by" type="varchar(55)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(55)" />
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="timestamp" />
         </createTable>
 
         <createTable tableName="tag">
@@ -51,6 +59,14 @@
             <column name="password" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="created_by" type="varchar(55)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(55)" />
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="timestamp" />
         </createTable>
 
         <createTable tableName="role">
@@ -94,6 +110,14 @@
             <column name="video_id" type="varchar(55)">
                 <constraints nullable="false" foreignKeyName="fk_video_reaction_video_id" referencedTableName="video" referencedColumnNames="id"/>
             </column>
+            <column name="created_by" type="varchar(55)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(55)" />
+            <column name="created_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="datetime" />
         </createTable>
     </changeSet>
 

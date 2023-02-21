@@ -20,6 +20,10 @@ public class VideoReactionController {
 
     private final VideoReactionService videoReactionService;
 
+    // TODO add get by id, update and delete to video reaction
+
+    // TODO add audited fields to responses
+
     @PostMapping
     public VideoReactionResponse save(@PathVariable UUID videoId, Authentication authentication,
                                       @RequestBody VideoReactionRequest videoReactionRequest) {

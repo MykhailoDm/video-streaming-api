@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class VideoReaction {
+public class VideoReaction extends BaseAuditingEntity {
 
     @Id
     @Column(name = "id", nullable = false)

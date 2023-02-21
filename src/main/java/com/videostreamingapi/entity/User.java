@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class User extends BaseAuditingEntity {
 
     @Id
     @Column(name = "id", nullable = false)

@@ -13,4 +13,6 @@ public interface VideoReactionRepository extends JpaRepository<VideoReaction, UU
     boolean existsByUserIdAndVideoId(UUID userId, UUID videoId);
 
     Optional<VideoReaction> findByVideoIdAndUserId(UUID videoId, UUID userId);
+
+    void deleteByVideoIdAndUserId(UUID videoId, UUID userId);
 }

@@ -57,6 +57,12 @@ public class VideoReactionServiceImpl implements VideoReactionService {
         videoReaction.setPositive(!videoReaction.isPositive());
     }
 
+    @Override
+    public void delete(UUID videoId, UUID userId) {
+        log.info("Delete reaction to video {} for user {}", videoId, userId);
+        videoReactionRepository.deleteByVideoIdAndUserId(videoId, userId);
+    }
+
     private VideoReaction getVideoReactionByVideoIdAndUserId(UUID videoId, UUID userId) {
         return videoReactionRepository.findByVideoIdAndUserId(videoId, userId)
                 .orElseThrow(() -> new VideoReactionNotFound("Reaction to video " + videoId + " not found for user " + userId));

@@ -11,4 +11,6 @@ public interface VideoReactionService {
     VideoReactionResponse get(UUID videoId, UUID userId);
 
     void update(UUID videoId, UUID userId);
+
+    void delete(UUID videoId, UUID userId);
 }

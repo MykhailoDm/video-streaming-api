@@ -20,8 +20,6 @@ public class VideoReactionController {
 
     private final VideoReactionService videoReactionService;
 
-    // TODO add delete video reaction
-
     @PostMapping
     public VideoReactionResponse save(@PathVariable UUID videoId, Authentication authentication,
                                       @RequestBody VideoReactionRequest videoReactionRequest) {
@@ -39,5 +37,11 @@ public class VideoReactionController {
     public void update(@PathVariable UUID videoId, Authentication authentication) {
         log.info("Request to update reaction to video {}", videoId);
         videoReactionService.update(videoId, getUserIdFromAuthentication(authentication));
+    }
+
+    @DeleteMapping
+    public void delete(@PathVariable UUID videoId, Authentication authentication) {
+        log.info("Request to delete reaction to video {}", videoId);
+        videoReactionService.delete(videoId, getUserIdFromAuthentication(authentication));
     }
 }

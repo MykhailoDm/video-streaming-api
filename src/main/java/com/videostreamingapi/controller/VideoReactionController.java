@@ -20,12 +20,19 @@ public class VideoReactionController {
 
     private final VideoReactionService videoReactionService;
 
-    // TODO add get by id, update and delete to video reaction
+    // TODO add update
+    // TODO add delete video reaction
 
     @PostMapping
     public VideoReactionResponse save(@PathVariable UUID videoId, Authentication authentication,
                                       @RequestBody VideoReactionRequest videoReactionRequest) {
         log.info("Request to save reaction to video {}. Reaction is positive: {}", videoId, videoReactionRequest.isPositive());
         return videoReactionService.save(videoId, getUserIdFromAuthentication(authentication), videoReactionRequest);
+    }
+
+    @GetMapping
+    public VideoReactionResponse get(@PathVariable UUID videoId, Authentication authentication) {
+        log.info("Request to get reaction to video {}", videoId);
+        return videoReactionService.get(videoId, getUserIdFromAuthentication(authentication));
     }
 }

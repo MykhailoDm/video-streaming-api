@@ -4,6 +4,7 @@ import com.videostreamingapi.dto.request.VideoReactionRequest;
 import com.videostreamingapi.dto.response.VideoReactionResponse;
 import com.videostreamingapi.entity.VideoReaction;
 import com.videostreamingapi.exception.VideoReactionAlreadyExists;
+import com.videostreamingapi.exception.VideoReactionNotFound;
 import com.videostreamingapi.repository.VideoReactionRepository;
 import com.videostreamingapi.service.UserService;
 import com.videostreamingapi.service.VideoReactionService;
@@ -40,6 +41,18 @@ public class VideoReactionServiceImpl implements VideoReactionService {
         videoReactionRepository.save(videoReaction);
         log.debug("Created video reaction with id {}", videoReaction.getId());
         return VideoReactionMapper.videoReactionToVideoReactionResponse(videoReaction);
+    }
+
+    @Override
+    public VideoReactionResponse get(UUID videoId, UUID userId) {
+        log.info("Get reaction to video {} for user {}", videoId, userId);
+        var videoReaction = getVideoReactionByVideoIdAndUserId(videoId, userId);
+        return VideoReactionMapper.videoReactionToVideoReactionResponse(videoReaction);
+    }
+
+    private VideoReaction getVideoReactionByVideoIdAndUserId(UUID videoId, UUID userId) {
+        return videoReactionRepository.findByVideoIdAndUserId(videoId, userId)
+                .orElseThrow(() -> new VideoReactionNotFound("Reaction to video " + videoId + " not found for user " + userId));
     }
 
     private VideoReaction buildVideoReaction(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {

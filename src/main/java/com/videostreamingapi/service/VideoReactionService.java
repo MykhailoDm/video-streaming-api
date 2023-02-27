@@ -9,4 +9,6 @@ public interface VideoReactionService {
     VideoReactionResponse save(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest);
 
     VideoReactionResponse get(UUID videoId, UUID userId);
+
+    void update(UUID videoId, UUID userId);
 }

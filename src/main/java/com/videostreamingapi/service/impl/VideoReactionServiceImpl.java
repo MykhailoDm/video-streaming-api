@@ -50,6 +50,13 @@ public class VideoReactionServiceImpl implements VideoReactionService {
         return VideoReactionMapper.videoReactionToVideoReactionResponse(videoReaction);
     }
 
+    @Override
+    public void update(UUID videoId, UUID userId) {
+        log.info("Get reaction to video {} for user {}", videoId, userId);
+        var videoReaction = getVideoReactionByVideoIdAndUserId(videoId, userId);
+        videoReaction.setPositive(!videoReaction.isPositive());
+    }
+
     private VideoReaction getVideoReactionByVideoIdAndUserId(UUID videoId, UUID userId) {
         return videoReactionRepository.findByVideoIdAndUserId(videoId, userId)
                 .orElseThrow(() -> new VideoReactionNotFound("Reaction to video " + videoId + " not found for user " + userId));

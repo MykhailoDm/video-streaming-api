@@ -14,7 +14,7 @@ public class AuthenticationUtils {
         return authenticationToUserDetails(authentication).getId();
     }
 
-    private static UserDetailsImpl authenticationToUserDetails(Authentication authentication) {
+    public static UserDetailsImpl authenticationToUserDetails(Authentication authentication) {
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetailsImpl userDetails) {
             return userDetails;

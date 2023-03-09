@@ -42,7 +42,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean validateJwtToken(String authToken) {
-        log.info("Validating jwt token");
+        log.debug("Validating jwt token");
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
             return true;

@@ -22,6 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity()
 public class WebSecurityConfig {
 
+    private static final String ADMIN = "ADMIN";
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider(
             PasswordEncoder passwordEncoder,
@@ -56,6 +58,8 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/users/me").authenticated()
+                .requestMatchers("/api/v1/users**", "/api/v1/users/**").hasRole(ADMIN)
                 .requestMatchers(HttpMethod.GET, "/api/v1/videos*", "/api/v1/videos/*", "/api/v1/videos/bytes/*").permitAll()
                 .anyRequest().authenticated();
 

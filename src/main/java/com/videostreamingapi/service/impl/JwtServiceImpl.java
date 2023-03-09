@@ -36,7 +36,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getUsernameFromJwtToken(String token) {
-        log.info("Getting username from token");
+        log.debug("Getting username from token");
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 

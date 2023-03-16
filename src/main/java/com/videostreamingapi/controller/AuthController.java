@@ -18,8 +18,6 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    // TODO add controller for user information
-
     @PostMapping("/signin")
     public SignInResponse signIn(@RequestBody SignInRequest signInRequest) {
         log.info("Sign in request for user: {}", signInRequest.username());

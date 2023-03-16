@@ -5,8 +5,11 @@ import com.videostreamingapi.entity.User;
 import com.videostreamingapi.exception.UserNotFoundException;
 import com.videostreamingapi.repository.UserRepository;
 import com.videostreamingapi.service.UserService;
+import com.videostreamingapi.util.UserMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,4 +46,10 @@ public class UserServiceImpl implements UserService {
         var user = findById(userDetails.getId());
         return userToUserInfoResponse(user);
     }
+
+    @Override
+    public Page<UserInfoResponse> getUserInfo(Pageable pageable) {
+        return userRepository.findAll(pageable).map(UserMapper::userToUserInfoResponse);
+    }
+
 }

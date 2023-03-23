@@ -121,4 +121,21 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="createVideoViewTable" author="Mykhailo">
+        <createTable tableName="video_view">
+            <column name="id" type="varchar(55)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="varchar(55)">
+                <constraints nullable="false" foreignKeyName="fk_video_view_user_id" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+            <column name="video_id" type="varchar(55)">
+                <constraints nullable="false" foreignKeyName="fk_video_view_video_id" referencedTableName="video" referencedColumnNames="id"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

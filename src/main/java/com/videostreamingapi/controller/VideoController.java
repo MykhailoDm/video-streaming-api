@@ -23,7 +23,7 @@ import static com.videostreamingapi.util.AuthenticationUtils.getUserIdFromAuthen
 @Slf4j
 public class VideoController {
 
-    // TODO add views APIs
+    // TODO add views APIs similar in structure to reactions API
 
     private final VideoService videoService;
 

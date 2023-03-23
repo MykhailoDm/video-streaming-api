@@ -15,6 +15,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(value = StatusCodeException.class)
     public ResponseEntity<Object> handleStatusCodeExceptions(StatusCodeException statusCodeException, WebRequest webRequest) {
+        // TODO change log level to error
         log.debug("Status code exception was thrown with message: {}", statusCodeException.getMessage());
         return ResponseEntity.status(statusCodeException.getHttpStatus())
                 .body(new ExceptionMessageDto(statusCodeException.getMessage()));

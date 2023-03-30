@@ -28,7 +28,9 @@ public class VideoViewServiceImpl implements VideoViewService {
     @Override
     public VideoViewResponse save(UUID videoId, UUID userId) {
         log.info("Saving video view for video: {}, user: {}", videoId, userId);
-        // TODO add validation for whether video and user exist
+
+        userService.checkWhetherUserExistsById(userId);
+        videoService.checkWhetherVideoExistsById(videoId);
 
         VideoView videoView = videoViewRepository.save(buildVideoView(videoId, userId));
         return VideoViewMapper.videoViewToVideoViewResponse(videoView);

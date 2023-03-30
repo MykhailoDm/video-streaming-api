@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 public class VideoMapper {
 
     public static VideoResponse videoToVideoResponse(Video video) {
-        return videoToVideoResponse(video, 0, 0);
+        return videoToVideoResponse(video, 0, 0, 0);
     }
 
-    public static VideoResponse videoToVideoResponse(Video video, long likes, long dislikes) {
+    public static VideoResponse videoToVideoResponse(Video video, long likes, long dislikes, long views) {
         return new VideoResponse(video.getId(), video.getTitle(), video.getDescription(),
-                getTagsFromTagEntity(video.getTags()), likes, dislikes,
+                getTagsFromTagEntity(video.getTags()), likes, dislikes, views,
                 video.getCreatedBy(), video.getLastModifiedBy(),
                 video.getCreatedDate(), video.getLastModifiedDate());
     }
 
     public static VideoResponse videoInfoToVideoResponse(VideoInfo videoInfo) {
         return new VideoResponse(videoInfo.getId(), videoInfo.getTitle(), videoInfo.getDescription(),
-                getTagsFromTagEntity(videoInfo.getTags()), videoInfo.getLikes(), videoInfo.getDislikes(),
+                getTagsFromTagEntity(videoInfo.getTags()), videoInfo.getLikes(), videoInfo.getDislikes(), videoInfo.getViews(),
                 videoInfo.getCreatedBy(), videoInfo.getModifiedBy(),
                 videoInfo.getCreatedDate(), videoInfo.getModifiedDate());
     }

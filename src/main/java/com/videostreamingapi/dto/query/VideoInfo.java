@@ -14,18 +14,19 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 public class VideoInfo {
-    UUID id;
-    String title;
-    String description;
-    Set<Tag> tags;
-    long likes;
-    long dislikes;
-    String createdBy;
-    String modifiedBy;
-    LocalDateTime createdDate;
-    LocalDateTime modifiedDate;
+    private UUID id;
+    private String title;
+    private String description;
+    private Set<Tag> tags;
+    private long likes;
+    private long dislikes;
+    private long views;
+    private String createdBy;
+    private String modifiedBy;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
-    public VideoInfo(Video video, long likes, long dislikes) {
+    public VideoInfo(Video video, long likes, long dislikes, long views) {
         this.id = video.getId();
         this.title = video.getTitle();
         this.description = video.getDescription();
@@ -36,5 +37,6 @@ public class VideoInfo {
         this.modifiedDate = video.getLastModifiedDate();
         this.likes = likes;
         this.dislikes = dislikes;
+        this.views = views;
     }
 }

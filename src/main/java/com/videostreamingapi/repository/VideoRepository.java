@@ -19,10 +19,11 @@ public interface VideoRepository extends JpaRepository<Video, UUID> {
 
     void deleteByIdAndUserId(UUID id, UUID userId);
 
-    @Query("SELECT new com.videostreamingapi.dto.query.VideoInfo(video, count(postiveReaction), count(negativeReaction)) " +
+    @Query("SELECT new com.videostreamingapi.dto.query.VideoInfo(video, count(distinct postiveReaction), count(distinct negativeReaction), count(distinct videoView)) " +
             "FROM Video video " +
             "LEFT JOIN VideoReaction postiveReaction ON video.id = postiveReaction.video.id AND postiveReaction.isPositive " +
             "LEFT JOIN VideoReaction negativeReaction ON video.id = negativeReaction.video.id AND NOT negativeReaction.isPositive " +
+            "LEFT JOIN VideoView  videoView ON video.id = videoView.video.id " +
             "WHERE video.id = :id")
     Optional<VideoInfo> findInfoById(@Param("id") UUID id);
 }

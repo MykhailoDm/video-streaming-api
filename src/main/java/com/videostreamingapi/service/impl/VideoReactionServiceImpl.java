@@ -32,12 +32,14 @@ public class VideoReactionServiceImpl implements VideoReactionService {
     public VideoReactionResponse save(UUID videoId, UUID userId, VideoReactionRequest videoReactionRequest) {
         log.info("Saving reaction for video {}", videoId);
 
+        userService.checkWhetherUserExistsById(userId);
+        videoService.checkWhetherVideoExistsById(videoId);
+
         if (videoReactionRepository.existsByUserIdAndVideoId(userId, videoId)) {
             log.debug("User {} has already reacted to video {}", userId, videoId);
             throw new VideoReactionAlreadyExists("Video Reaction already exists for user " + userId + " and video " + videoId);
         }
 
-        // TODO add validation for whether video exist and user exist
         var videoReaction = buildVideoReaction(videoId, userId, videoReactionRequest);
         videoReactionRepository.save(videoReaction);
         log.debug("Created video reaction with id {}", videoReaction.getId());

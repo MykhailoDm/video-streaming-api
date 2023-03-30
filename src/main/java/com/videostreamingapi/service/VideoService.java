@@ -20,4 +20,6 @@ public interface VideoService {
     void delete(UUID id, UUID userId);
 
     Video findById(UUID id);
+
+    void checkWhetherVideoExistsById(UUID id);
 }

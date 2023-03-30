@@ -38,6 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void checkWhetherUserExistsById(UUID id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("User with id " + id + " does not exist.");
+        }
+    }
+
+    @Override
     public UserInfoResponse getCurrentUserInfo() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userDetails = authenticationToUserDetails(authentication);

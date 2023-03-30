@@ -13,6 +13,8 @@ public interface UserService {
 
     User findById(UUID id);
 
+    void checkWhetherUserExistsById(UUID id);
+
     UserInfoResponse getCurrentUserInfo();
 
     Page<UserInfoResponse> getUserInfo(Pageable pageable);

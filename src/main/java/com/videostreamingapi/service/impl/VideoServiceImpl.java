@@ -83,6 +83,13 @@ public class VideoServiceImpl implements VideoService {
                 .orElseThrow(() -> new VideoNotFoundException("Video with id " + id + " not found."));
     }
 
+    @Override
+    public void checkWhetherVideoExistsById(UUID id) {
+        if (!videoRepository.existsById(id)) {
+            throw new VideoNotFoundException("Video with id " + id + " does not exist.");
+        }
+    }
+
     private Video getVideoEntityById(UUID id, UUID userId) {
         return videoRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new VideoNotFoundException(VIDEO_NOT_FOUND_EXCEPTION_MESSAGE + id + ", for user with id: " + userId));

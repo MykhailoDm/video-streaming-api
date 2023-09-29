@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.1.0
+    restart: 'no'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root_db
+    ports:
+      - 6754:3306
+    volumes:
+      - db:/var/lib/mysql
+  app:
+    depends_on:
+      - mysql
+    restart: 'no'
+    image: com.videostreamingapi:video-streaming-api-v9
+    env_file:
+      - ./docker_compose_env
+    ports:
+      - 8080:8080
+
+volumes:
+  db:

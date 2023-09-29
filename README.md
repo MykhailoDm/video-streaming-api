@@ -12,3 +12,7 @@ docker build -t com.videostreamingapi:video-streaming-api-v{version_number} .
 
 docker run -p 8080:8080 --env-file {env_file_location} com.videostreamingapi:v
 ideo-streaming-api-v{version_number}
+
+# Local example docker compose orchestration:
+
+docker compose up -d
